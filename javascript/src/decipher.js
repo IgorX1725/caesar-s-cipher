@@ -21,7 +21,9 @@ const setSalt = (letter, salt) => {
 }
 module.exports = { 
 
-    decipher : (cipher, salt) =>{
+    decipher : (json) =>{
+        const cipher = json.cifrado
+        const salt = json.numero_casas
         console.log('cipher: '+ cipher)
         let deciphered = ''
         cipher.toLowerCase()
@@ -32,6 +34,7 @@ module.exports = {
             
         }
         console.log('Deciphered text: '+deciphered)
-        return	deciphered
+        json.decifrado = deciphered
+        return json
     }
 }

@@ -1,6 +1,4 @@
 const fs = require('fs')
-
-
 const dir = "answer.json"
 
 module.exports = {
@@ -12,11 +10,9 @@ module.exports = {
                 console.log("An error occured while writing JSON Object to File.");
                 return console.log(err);
             }
-        
-            console.log(`JSON file has been saved: ${dir}`);
-            return json
+            console.log(`JSON file has been saved: ${dir}`)
         })
-        return json
+        return this.getJson()
     },
 
     update(json){
@@ -29,9 +25,17 @@ module.exports = {
         
             console.log(`JSON file has been updated: ${dir}`);
         })
+        return  fs.createReadStream('./answer.json')
     },
 
     getJson(){
-        return JSON.parse(fs.readFileSync(dir, 'utf8'));
+        return new Promise((resolve, reject)=>{
+            fs.readFile( dir, 'utf8', function(err, contents) {
+                if(err){
+                    reject(err)
+                }
+                resolve(JSON.parse(contents))
+            });
+        }) 
     }
 }
